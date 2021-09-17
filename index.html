@@ -128,9 +128,17 @@
       var statusElement = document.getElementById('status');
       var progressElement = document.getElementById('progress');
       var spinnerElement = document.getElementById('spinner');
+      function onPageLoaded(){
+      	//Uncomment the service worker below for actual releases to force files to be cached so you can play offline.
+      	//Leave it commented when testing because otherwise when you refresh the page you'll still be getting cached data.
+      	if('serviceWorker' in navigator) {
+         	navigator.serviceWorker.register('worker.js');
+      	};
 
-      var Module = {
-        preRun: [],
+     var Module = {
+        preRun: function(){
+		    onPageLoaded();
+        },
         postRun: [],
         print: (function() {
           var element = document.getElementById('output');
